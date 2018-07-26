@@ -21,25 +21,23 @@
  *     Aion foundation.
  *
  ******************************************************************************/
+package org.aion.evtmgr;
 
-package org.aion.evtmgr.impl.handler;
-
-import org.aion.evtmgr.IHandler;
+import org.aion.evtmgr.impl.evt.EventBlock;
+import org.aion.evtmgr.impl.handler.BlockHandler;
 import org.junit.Test;
-import static junit.framework.TestCase.assertEquals;
 
-public class HandlerTest {
+public class InterfaceCoverage {
 
     @Test
-    public void testInstantiate(){
-        IHandler blkHdr = new BlockHandler();
-        IHandler txHdr = new TxHandler();
-        IHandler consHdr = new ConsensusHandler();
-        IHandler minerHdr = new MinerHandler();
+    public void testIEvent(){
+        IEvent event = new EventBlock(EventBlock.CALLBACK.ONBLOCK0);
+    }
 
-        assertEquals(BlockHandler.class, blkHdr.getClass());
-        assertEquals(TxHandler.class, txHdr.getClass());
-        assertEquals(ConsensusHandler.class, consHdr.getClass());
-        assertEquals(MinerHandler.class, minerHdr.getClass());
+    @Test
+    public void testIHandler(){
+        IHandler handler = new BlockHandler();
+        IHandler.TYPE i = IHandler.TYPE.GETTYPE(1);
+        IHandler.TYPE i2 = IHandler.TYPE.GETTYPE(9);
     }
 }

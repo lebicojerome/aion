@@ -22,24 +22,35 @@
  *
  ******************************************************************************/
 
-package org.aion.evtmgr.impl.handler;
+package org.aion.evtmgr;
 
-import org.aion.evtmgr.IHandler;
+import org.aion.evtmgr.impl.mgr.EventMgrA0;
 import org.junit.Test;
-import static junit.framework.TestCase.assertEquals;
+import java.util.Properties;
 
-public class HandlerTest {
+import static org.junit.Assert.assertEquals;
+
+public class EventMgrModuleTest {
 
     @Test
-    public void testInstantiate(){
-        IHandler blkHdr = new BlockHandler();
-        IHandler txHdr = new TxHandler();
-        IHandler consHdr = new ConsensusHandler();
-        IHandler minerHdr = new MinerHandler();
+    public void orderedCoverageTest() throws Throwable{
+        EventMgrModule singletonEventMgrModule;
+        Properties prop = new Properties();
 
-        assertEquals(BlockHandler.class, blkHdr.getClass());
-        assertEquals(TxHandler.class, txHdr.getClass());
-        assertEquals(ConsensusHandler.class, consHdr.getClass());
-        assertEquals(MinerHandler.class, minerHdr.getClass());
+        // try initialize with null input
+        try {
+            singletonEventMgrModule = EventMgrModule.getSingleton(null);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+
+        // initialize with proper input
+        prop.put(EventMgrModule.MODULENAME, "org.aion.evtmgr.impl.mgr.EventMgrA0");
+        singletonEventMgrModule = EventMgrModule.getSingleton(prop);
+
+        // test getEventMgr()
+        IEventMgr eventMgr = singletonEventMgrModule.getEventMgr();
+        assertEquals(EventMgrA0.class, eventMgr.getClass());
+        assertEquals(4, eventMgr.getHandlerList().size());
     }
 }
