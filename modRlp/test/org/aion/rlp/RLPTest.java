@@ -1041,7 +1041,7 @@ public class RLPTest {
     }
 
     // Code from: http://stackoverflow.com/a/4785776/459349
-    private String bytesToAscii(byte[] b) {
+    public static String bytesToAscii(byte[] b) {
         String hex = Hex.toHexString(b);
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < hex.length(); i += 2) {

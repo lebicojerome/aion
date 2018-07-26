@@ -1032,29 +1032,46 @@ public class RLP {
         return data;
     }
 
-    /*
-     * Utility function to convert Objects into byte arrays
-     */
+    /** Utility function to convert Objects into byte arrays */
     private static byte[] toBytes(Object input) {
         if (input instanceof byte[]) {
             return (byte[]) input;
         } else if (input instanceof String) {
             String inputString = (String) input;
             return inputString.getBytes();
-        } else if (input instanceof Long) {
-            Long inputLong = (Long) input;
-            return (inputLong == 0) ? ByteUtil.EMPTY_BYTE_ARRAY : asUnsignedByteArray(BigInteger.valueOf(inputLong));
+        } else if (input instanceof Byte) {
+            Byte inputByte = (Byte) input;
+            return (inputByte == 0)
+                ? ByteUtil.EMPTY_BYTE_ARRAY
+                : asUnsignedByteArray(BigInteger.valueOf(inputByte));
+        } else if (input instanceof Short) {
+            Short inputShort = (Short) input;
+            return (inputShort == 0)
+                ? ByteUtil.EMPTY_BYTE_ARRAY
+                : asUnsignedByteArray(BigInteger.valueOf(inputShort));
         } else if (input instanceof Integer) {
             Integer inputInt = (Integer) input;
-            return (inputInt == 0) ? ByteUtil.EMPTY_BYTE_ARRAY : asUnsignedByteArray(BigInteger.valueOf(inputInt));
+            return (inputInt == 0)
+                ? ByteUtil.EMPTY_BYTE_ARRAY
+                : asUnsignedByteArray(BigInteger.valueOf(inputInt));
+        } else if (input instanceof Long) {
+            Long inputLong = (Long) input;
+            return (inputLong == 0)
+                ? ByteUtil.EMPTY_BYTE_ARRAY
+                : asUnsignedByteArray(BigInteger.valueOf(inputLong));
         } else if (input instanceof BigInteger) {
             BigInteger inputBigInt = (BigInteger) input;
-            return (inputBigInt.equals(BigInteger.ZERO)) ? ByteUtil.EMPTY_BYTE_ARRAY : asUnsignedByteArray(inputBigInt);
+            return (inputBigInt.equals(BigInteger.ZERO))
+                ? ByteUtil.EMPTY_BYTE_ARRAY
+                : asUnsignedByteArray(inputBigInt);
         } else if (input instanceof Value) {
             Value val = (Value) input;
             return toBytes(val.asObj());
         }
-        throw new RuntimeException("Unsupported type: Only accepting String, Integer and BigInteger for now");
+        throw new RuntimeException(
+            "Unsupported type "
+                + input.getClass().getSimpleName()
+                + ". Only accepting String, Byte, Short, Integer, Long and BigInteger for now.");
     }
 
     private static int calculateLength(byte[] data, int index) {
