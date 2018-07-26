@@ -27,7 +27,7 @@ import org.aion.evtmgr.impl.evt.EventBlock;
 import org.aion.evtmgr.impl.handler.BlockHandler;
 import org.junit.Test;
 
-public class InterfaceCoverage {
+public class InterfaceCoverageTest {
 
     @Test
     public void testIEvent(){
